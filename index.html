@@ -1,39 +1,115 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的个人作品网站</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            color: #333;
-            background-color: #f5f5f5;
-        }
-        h1 {
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 0.5rem;
-        }
-        .project {
-            margin: 1.5rem 0;
-            padding: 1rem;
-            background: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <h1>你好，我是 88chy</h1>
-    <p>这是我的个人作品展示网站，欢迎来访！</p>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hongyu Chen</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body {
+    background: #fff;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    padding: 12vh 10vw;
+  }
 
-    <div class="project">
-        <h2>作品一：个人作品集</h2>
-        <p>这是我用 HTML 和 CSS 搭建的第一个个人网站。</p>
-    </div>
+  .name {
+    font-size: 30px;
+    font-weight: 500;
+    margin-bottom: 22vh;
+    opacity: 0.8;
+    color: #111;
+  }
+
+  .work {
+    margin-bottom: 28vh;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1.1s ease-out, transform 1.1s ease-out;
+    cursor: pointer;
+  }
+  .work.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .w-50  { width: 50%; }
+  .w-65  { width: 65%; }
+  .w-80  { width: 80%; }
+  .w-100 { width: 100%; }
+
+  .center { margin: 0 auto; }
+  .left   { margin-left: 0; }
+  .right  { margin-left: auto; }
+
+  .work img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .about {
+    margin-top: 30vh;
+    opacity: 0;
+    transition: all 1.1s ease-out;
+  }
+  .about.show {
+    opacity: 1;
+  }
+  .about-text {
+    font-size: 14px;
+    color: #555;
+  }
+  .copyright {
+    margin-top: 60px;
+    font-size: 12px;
+    color: #999;
+  }
+</style>
+</head>
+
+<body>
+
+<div class="name">Hongyu Chen</div>
+
+<div class="work center w-65" onclick="window.open('work-1.html', '_blank')">
+  <img src="cover-1.jpg">
+</div>
+
+<div class="work left w-50" onclick="window.open('work-2.html', '_blank')">
+  <img src="cover-2.jpg">
+</div>
+
+<div class="work center w-80" onclick="window.open('work-3.html', '_blank')">
+  <img src="cover-3.jpg">
+</div>
+
+<div class="work w-100" onclick="window.open('work-4.html', '_blank')">
+  <img src="cover-4.jpg">
+</div>
+
+<div class="work center w-80" onclick="window.open('work-5.html', '_blank')">
+  <img src="cover-5.jpg">
+</div>
+
+<div class="about">
+  <div class="about-text">
+    Visual & performance art practice.<br>
+    Body, identity, space.
+  </div>
+  <div class="copyright">© Hongyu Chen</div>
+</div>
+
+<script>
+  const items = document.querySelectorAll('.work, .about');
+  const ob = new IntersectionObserver(es => {
+    es.forEach(e => e.isIntersecting && e.target.classList.add('show'));
+  }, { threshold: 0.05 });
+  items.forEach(i => ob.observe(i));
+</script>
+
 </body>
 </html>

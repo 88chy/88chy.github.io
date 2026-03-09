@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hongyu Chen</title>
+<title></title>
 <style>
   * {
     margin: 0;
@@ -15,7 +15,6 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     padding: 12vh 10vw;
   }
-
   .name {
     font-size: 30px;
     font-weight: 500;
@@ -23,7 +22,6 @@
     opacity: 0.8;
     color: #111;
   }
-
   .work {
     margin-bottom: 28vh;
     opacity: 0;
@@ -35,22 +33,18 @@
     opacity: 1;
     transform: translateY(0);
   }
-
   .w-50  { width: 50%; }
   .w-65  { width: 65%; }
   .w-80  { width: 80%; }
   .w-100 { width: 100%; }
-
   .center { margin: 0 auto; }
   .left   { margin-left: 0; }
   .right  { margin-left: auto; }
-
   .work img {
     width: 100%;
     height: auto;
     display: block;
   }
-
   .about {
     margin-top: 30vh;
     opacity: 0;
@@ -70,39 +64,30 @@
   }
 </style>
 </head>
-
 <body>
-
-<div class="name">Hongyu Chen</div>
-
+<div class="name">陈红羽</div>
 <div class="work center w-65" onclick="window.open('work-1.html', '_blank')">
   <img src="cover-1.jpg">
 </div>
-
 <div class="work left w-50" onclick="window.open('work-2.html', '_blank')">
   <img src="cover-2.jpg">
 </div>
-
 <div class="work center w-80" onclick="window.open('work-3.html', '_blank')">
   <img src="cover-3.jpg">
 </div>
-
 <div class="work w-100" onclick="window.open('work-4.html', '_blank')">
   <img src="cover-4.jpg">
 </div>
-
 <div class="work center w-80" onclick="window.open('work-5.html', '_blank')">
   <img src="cover-5.jpg">
 </div>
-
 <div class="about">
   <div class="about-text">
     Visual & performance art practice.<br>
     Body, identity, space.
   </div>
-  <div class="copyright">© Hongyu Chen</div>
+  <div class="copyright">© 陈红羽</div>
 </div>
-
 <script>
   const items = document.querySelectorAll('.work, .about');
   const ob = new IntersectionObserver(es => {
@@ -110,6 +95,5 @@
   }, { threshold: 0.05 });
   items.forEach(i => ob.observe(i));
 </script>
-
 </body>
 </html>

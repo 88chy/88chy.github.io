@@ -19,7 +19,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* 顶部栏：标题 + 汉堡菜单（手机端） */
+    /* 顶部栏：标题 + 汉堡/叉按钮（手机端） */
     .header {
       position: fixed;
       top: 0;
@@ -46,22 +46,23 @@
       flex-direction: column;
       justify-content: space-between;
       cursor: pointer;
+      position: relative;
     }
     .menu-btn span {
       width: 100%;
       height: 2px;
       background: #111;
+      transition: all 0.3s ease;
     }
-
-    /* 关闭按钮：固定在屏幕最右上角，和菜单完全分离 */
-    .close-btn {
-      position: fixed;
-      top: 25px;
-      right: 25px;
-      font-size: 30px;
-      cursor: pointer;
-      z-index: 101; /* 永远在最上层 */
-      display: none; /* 默认隐藏 */
+    /* 菜单展开时，汉堡变成 × */
+    .menu-btn.active span:nth-child(1) {
+      transform: translateY(9px) rotate(45deg);
+    }
+    .menu-btn.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .menu-btn.active span:nth-child(3) {
+      transform: translateY(-9px) rotate(-45deg);
     }
 
     /* 侧边菜单：从右侧滑出（手机端） */
@@ -136,9 +137,6 @@
       .header {
         display: none;
       }
-      .close-btn {
-        display: none !important;
-      }
       .sidebar {
         position: fixed;
         top: 0;
@@ -202,9 +200,6 @@
   </div>
 </div>
 
-<!-- 关闭按钮：独立在菜单外，永远不重叠 -->
-<div class="close-btn" id="closeBtn">×</div>
-
 <!-- 侧边菜单 -->
 <div class="sidebar" id="sidebar">
   <h2>510521199509080024</h2>
@@ -251,32 +246,26 @@
 </div>
 
 <script>
-  // 菜单开关
   const menuBtn = document.getElementById('menuBtn');
-  const closeBtn = document.getElementById('closeBtn');
   const sidebar = document.getElementById('sidebar');
+  const navItems = document.querySelectorAll('.nav-item');
+  const workGroups = document.querySelectorAll('.work-group');
 
+  // 点击汉堡按钮：切换菜单展开/收起，并切换按钮样式
   menuBtn.addEventListener('click', () => {
-    sidebar.classList.add('active');
-    closeBtn.style.display = 'block';
-  });
-  closeBtn.addEventListener('click', () => {
-    sidebar.classList.remove('active');
-    closeBtn.style.display = 'none';
+    menuBtn.classList.toggle('active');
+    sidebar.classList.toggle('active');
   });
 
   // 点击菜单外区域收起菜单
   document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target) && !closeBtn.contains(e.target)) {
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+      menuBtn.classList.remove('active');
       sidebar.classList.remove('active');
-      closeBtn.style.display = 'none';
     }
   });
 
-  // 作品切换 + 自动收起菜单
-  const navItems = document.querySelectorAll('.nav-item');
-  const workGroups = document.querySelectorAll('.work-group');
-
+  // 点击作品项：切换内容并收起菜单
   navItems.forEach(item => {
     item.addEventListener('click', () => {
       const target = item.dataset.target;
@@ -284,8 +273,8 @@
       document.getElementById(target).classList.add('active');
       navItems.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
+      menuBtn.classList.remove('active');
       sidebar.classList.remove('active');
-      closeBtn.style.display = 'none';
     });
   });
 

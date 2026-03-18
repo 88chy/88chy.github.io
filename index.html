@@ -53,7 +53,7 @@
       background: #111;
     }
 
-    /* 侧边菜单：从右侧滑出（手机端），调整内边距让关闭按钮可见 */
+    /* 侧边菜单：从右侧滑出（手机端），关闭按钮固定在右上角 */
     .sidebar {
       position: fixed;
       top: 0;
@@ -62,7 +62,7 @@
       max-width: 320px;
       height: 100vh;
       background: #fff;
-      padding: 60px 40px 40px; /* 调整顶部 padding，给关闭按钮留空间 */
+      padding: 80px 40px 40px; /* 给关闭按钮留出顶部空间 */
       overflow-y: auto;
       transition: right 0.3s ease;
       z-index: 99;
@@ -91,11 +91,16 @@
       font-weight: 500;
     }
     .close-btn {
-      position: absolute;
+      position: fixed; /* 固定在屏幕右上角，不会被滚动顶走 */
       top: 25px;
       right: 25px;
       font-size: 30px;
       cursor: pointer;
+      z-index: 101; /* 确保在最上层 */
+      display: none; /* 默认隐藏，菜单激活时显示 */
+    }
+    .sidebar.active ~ .close-btn {
+      display: block;
     }
 
     /* 主内容：竖向大图（无边框） */
@@ -158,7 +163,7 @@
         font-size: 14px;
       }
       .close-btn {
-        display: none;
+        display: none !important; /* 电脑端彻底隐藏 */
       }
       .main {
         margin-top: 0;
@@ -198,9 +203,11 @@
   </div>
 </div>
 
+<!-- 关闭按钮：固定在屏幕右上角，菜单激活时显示 -->
+<div class="close-btn" id="closeBtn">×</div>
+
 <!-- 侧边菜单 -->
 <div class="sidebar" id="sidebar">
-  <div class="close-btn" id="closeBtn">×</div>
   <h2>510521199509080024</h2>
 
   <div class="nav-category">Silence</div>
@@ -250,13 +257,20 @@
   const closeBtn = document.getElementById('closeBtn');
   const sidebar = document.getElementById('sidebar');
 
-  menuBtn.addEventListener('click', () => sidebar.classList.add('active'));
-  closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
+  menuBtn.addEventListener('click', () => {
+    sidebar.classList.add('active');
+    closeBtn.style.display = 'block';
+  });
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    closeBtn.style.display = 'none';
+  });
 
   // 点击菜单外区域收起菜单
   document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target) && !closeBtn.contains(e.target)) {
       sidebar.classList.remove('active');
+      closeBtn.style.display = 'none';
     }
   });
 
@@ -272,6 +286,7 @@
       navItems.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
       sidebar.classList.remove('active');
+      closeBtn.style.display = 'none';
     });
   });
 

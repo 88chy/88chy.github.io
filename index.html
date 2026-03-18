@@ -36,10 +36,10 @@
       letter-spacing: -0.02em;
     }
 
-    /* 下拉菜单（从顶部滑出） */
+    /* 下拉菜单（默认收起，点击标题才滑出） */
     .menu {
       position: fixed;
-      top: -100%;
+      top: -100%; /* 默认藏在屏幕外 */
       left: 0;
       right: 0;
       background: #fff;
@@ -49,7 +49,7 @@
       z-index: 99;
     }
     .menu.active {
-      top: 0;
+      top: 0; /* 点击标题后滑出 */
     }
     .menu h2 {
       font-size: 28px;
@@ -75,9 +75,9 @@
       font-weight: 500;
     }
 
-    /* 主内容：竖向大图（无边框） */
+    /* 主内容：竖向大图（彻底无边框） */
     .main {
-      margin-top: 80px;
+      margin-top: 80px; /* 只给顶部标题留空间，菜单默认不占位置 */
       padding: 0 20px 40px;
     }
     .work-group {
@@ -101,10 +101,10 @@
     .work-img {
       width: 100%;
       height: auto;
-      /* 已彻底移除 border: 12px solid #000; */
+      /* 彻底无边框：无任何 border 代码 */
     }
 
-    /* 电脑端：恢复左右分栏 */
+    /* 电脑端：左右分栏 */
     @media (min-width: 769px) {
       .header {
         display: none;
@@ -164,23 +164,18 @@
   <h1>510521199509080024</h1>
 </div>
 
-<!-- 下拉菜单（手机端从顶部滑出，电脑端固定左侧） -->
+<!-- 下拉菜单（手机端默认收起） -->
 <div class="menu" id="menu">
   <h2>510521199509080024</h2>
 
-  <div class="nav-category">Silence</div>
-  <div class="nav-item active" data-target="silence-1">Where the Light Rests</div>
-  <div class="nav-item" data-target="silence-2">Cinematic Grain and Glow</div>
+  <div class="nav-category">好朋友</div>
+  <div class="nav-item active" data-target="friend">好朋友</div>
 
-  <div class="nav-category">Street</div>
-  <div class="nav-item" data-target="street-1">China 2020–2022</div>
-  <div class="nav-item" data-target="street-2">Echoes of Cuba | Havana 2024</div>
-  <div class="nav-item" data-target="street-3">City That Breathes | NY 2025</div>
-  <div class="nav-item" data-target="street-4">A Sense of Order | Tokyo 2025</div>
+  <div class="nav-category">交易</div>
+  <div class="nav-item" data-target="trade">交易</div>
 
-  <div class="nav-category">Polaroids</div>
-  <div class="nav-item" data-target="polaroids-1">Friends in Polaroids</div>
-  <div class="nav-item" data-target="polaroids-2">The Archive</div>
+  <div class="nav-category">回音</div>
+  <div class="nav-item" data-target="echo">回音</div>
 
   <div class="nav-category">About</div>
   <div class="nav-item" data-target="about">About</div>
@@ -188,15 +183,21 @@
 
 <!-- 主内容区 -->
 <div class="main">
-  <div class="work-group active" id="silence-1">
+  <div class="work-group active" id="friend">
     <div class="work-item active">
-      <img src="https://images.unsplash.com/photo-1556740755-069a40165b40?q=80&w=2000&auto=format&fit=crop" class="work-img">
+      <img src="https://mmbiz.qpic.cn/mmbiz_jpg/ZisNqcfUDZB9d8FmTVkNQ0U9G0tX9Q8iaia4Xt0s8iaic0iaic0iaic0iaic0iaic0iaic0iaic0iaic0iaic/640?wx_fmt=jpeg" class="work-img">
     </div>
   </div>
 
-  <div class="work-group" id="street-1">
+  <div class="work-group" id="trade">
     <div class="work-item active">
-      <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=2000&auto=format&fit=crop" class="work-img">
+      <img src="cover-2.jpg" class="work-img">
+    </div>
+  </div>
+
+  <div class="work-group" id="echo">
+    <div class="work-item active">
+      <img src="cover-3.jpg" class="work-img">
     </div>
   </div>
 
@@ -220,14 +221,14 @@
     menu.classList.toggle('active');
   });
 
-  // 点击菜单外区域收起菜单（手机端）
+  // 点击菜单外区域收起菜单
   document.addEventListener('click', (e) => {
     if (!menu.contains(e.target) && !header.contains(e.target)) {
       menu.classList.remove('active');
     }
   });
 
-  // 作品切换
+  // 作品切换 + 切换后自动收起菜单
   const navItems = document.querySelectorAll('.nav-item');
   const workGroups = document.querySelectorAll('.work-group');
 
@@ -238,7 +239,7 @@
       document.getElementById(target).classList.add('active');
       navItems.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
-      menu.classList.remove('active'); // 点击后收起菜单
+      menu.classList.remove('active'); // 点击作品后自动收起菜单
     });
   });
 

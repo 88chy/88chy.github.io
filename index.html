@@ -15,14 +15,20 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     padding: 12vh 10vw;
   }
+
+  /* --------------- 只改了这一段：固定右上角，不滚动 --------------- */
   .name {
-    font-size: 16px; /* 字号不大，手机友好 */
+    position: absolute;
+    top: 25px;
+    right: 25px;
+    font-size: 15px;
     font-weight: 500;
-    margin-bottom: 22vh;
-    opacity: 0.8;
+    opacity: 0.85;
     color: #111;
-    white-space: pre-wrap; /* 允许空格换行 */
+    z-index: 10;
   }
+  /* ------------------------------------------------------------- */
+
   .work {
     margin-bottom: 28vh;
     opacity: 0;
@@ -67,8 +73,8 @@
 </head>
 <body>
 
-<!-- 只改了这里：数字 + 随机空格，字号小，手机友好 -->
-<div class="name">    510521199509080024</div>
+<!-- 数字全部紧挨、无空格、固定在右上角 -->
+<div class="name">510521199509080024</div>
 
 <div class="work center w-65" onclick="window.open('work-1.html', '_blank')">
   <img src="cover-1.jpg">

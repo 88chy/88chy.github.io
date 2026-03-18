@@ -53,11 +53,11 @@
       background: #111;
     }
 
-    /* 侧边菜单：从右侧滑出（手机端） */
+    /* 侧边菜单：从右侧滑出（手机端），默认完全收起，不占内容空间 */
     .sidebar {
       position: fixed;
       top: 0;
-      right: -100%;
+      right: -100%; /* 完全藏在屏幕右侧外 */
       width: 80%;
       max-width: 320px;
       height: 100vh;
@@ -68,13 +68,11 @@
       z-index: 99;
     }
     .sidebar.active {
-      right: 0;
+      right: 0; /* 点击汉堡后滑出 */
     }
+    /* 手机端侧边栏不显示标题，避免重复 */
     .sidebar h2 {
-      font-size: 28px;
-      font-weight: 500;
-      margin-bottom: 30px;
-      letter-spacing: -0.02em;
+      display: none;
     }
     .nav-category {
       font-size: 22px;
@@ -101,9 +99,9 @@
       cursor: pointer;
     }
 
-    /* 主内容：竖向大图（无边框） */
+    /* 主内容：竖向大图（无边框），菜单默认不占空间 */
     .main {
-      margin-top: 80px;
+      margin-top: 80px; /* 只给顶部标题栏留空间 */
       padding: 30px 20px;
     }
     .work-group {
@@ -130,7 +128,7 @@
       /* 彻底无边框 */
     }
 
-    /* 电脑端：左右分栏 */
+    /* 电脑端：左右分栏，侧边栏显示标题 */
     @media (min-width: 769px) {
       .header {
         display: none;
@@ -147,8 +145,11 @@
         transition: none;
       }
       .sidebar h2 {
+        display: block;
         font-size: 26px;
+        font-weight: 500;
         margin-bottom: 50px;
+        letter-spacing: -0.02em;
       }
       .nav-category {
         font-size: 14px;
@@ -188,7 +189,7 @@
 </head>
 <body>
 
-<!-- 手机端顶部栏 -->
+<!-- 手机端顶部栏：只显示一次标题 + 汉堡菜单 -->
 <div class="header">
   <h1>510521199509080024</h1>
   <div class="menu-btn" id="menuBtn">
@@ -198,10 +199,10 @@
   </div>
 </div>
 
-<!-- 侧边菜单 -->
+<!-- 侧边菜单：手机端默认完全收起，不显示标题 -->
 <div class="sidebar" id="sidebar">
   <div class="close-btn" id="closeBtn">×</div>
-  <h2>510521199509080024</h2>
+  <h2>510521199509080024</h2> <!-- 手机端会被隐藏，电脑端显示 -->
 
   <div class="nav-category">Silence</div>
   <div class="nav-item active" data-target="silence-1">Where the Light Rests</div>
@@ -260,7 +261,7 @@
     }
   });
 
-  // 作品切换
+  // 作品切换 + 切换后自动收起菜单
   const navItems = document.querySelectorAll('.nav-item');
   const workGroups = document.querySelectorAll('.work-group');
 
@@ -271,7 +272,7 @@
       document.getElementById(target).classList.add('active');
       navItems.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
-      sidebar.classList.remove('active');
+      sidebar.classList.remove('active'); // 点击作品后自动收起菜单
     });
   });
 

@@ -16,11 +16,12 @@
     padding: 12vh 10vw;
   }
   .name {
-    font-size: 30px;
+    font-size: 16px; /* 字号不大，手机友好 */
     font-weight: 500;
     margin-bottom: 22vh;
     opacity: 0.8;
     color: #111;
+    white-space: pre-wrap; /* 允许空格换行 */
   }
   .work {
     margin-bottom: 28vh;
@@ -65,7 +66,10 @@
 </style>
 </head>
 <body>
-<div class="name">陈红羽</div>
+
+<!-- 只改了这里：数字 + 随机空格，字号小，手机友好 -->
+<div class="name">    510521199509080024</div>
+
 <div class="work center w-65" onclick="window.open('work-1.html', '_blank')">
   <img src="cover-1.jpg">
 </div>

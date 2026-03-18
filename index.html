@@ -53,7 +53,18 @@
       background: #111;
     }
 
-    /* 侧边菜单：从右侧滑出（手机端），关闭按钮固定在右上角 */
+    /* 关闭按钮：固定在屏幕最右上角，和菜单完全分离 */
+    .close-btn {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      font-size: 30px;
+      cursor: pointer;
+      z-index: 101; /* 永远在最上层 */
+      display: none; /* 默认隐藏 */
+    }
+
+    /* 侧边菜单：从右侧滑出（手机端） */
     .sidebar {
       position: fixed;
       top: 0;
@@ -62,7 +73,7 @@
       max-width: 320px;
       height: 100vh;
       background: #fff;
-      padding: 80px 40px 40px; /* 给关闭按钮留出顶部空间 */
+      padding: 80px 40px 40px;
       overflow-y: auto;
       transition: right 0.3s ease;
       z-index: 99;
@@ -89,18 +100,6 @@
     .nav-item:hover {
       color: #000;
       font-weight: 500;
-    }
-    .close-btn {
-      position: fixed; /* 固定在屏幕右上角，不会被滚动顶走 */
-      top: 25px;
-      right: 25px;
-      font-size: 30px;
-      cursor: pointer;
-      z-index: 101; /* 确保在最上层 */
-      display: none; /* 默认隐藏，菜单激活时显示 */
-    }
-    .sidebar.active ~ .close-btn {
-      display: block;
     }
 
     /* 主内容：竖向大图（无边框） */
@@ -137,6 +136,9 @@
       .header {
         display: none;
       }
+      .close-btn {
+        display: none !important;
+      }
       .sidebar {
         position: fixed;
         top: 0;
@@ -161,9 +163,6 @@
       }
       .nav-item {
         font-size: 14px;
-      }
-      .close-btn {
-        display: none !important; /* 电脑端彻底隐藏 */
       }
       .main {
         margin-top: 0;
@@ -203,7 +202,7 @@
   </div>
 </div>
 
-<!-- 关闭按钮：固定在屏幕右上角，菜单激活时显示 -->
+<!-- 关闭按钮：独立在菜单外，永远不重叠 -->
 <div class="close-btn" id="closeBtn">×</div>
 
 <!-- 侧边菜单 -->

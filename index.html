@@ -19,54 +19,73 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* 顶部标题栏（点击展开菜单） */
+    /* 顶部栏：标题 + 汉堡菜单（手机端） */
     .header {
       position: fixed;
       top: 0;
       left: 0;
       right: 0;
-      padding: 20px 25px;
+      height: 80px;
+      padding: 0 25px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       background: #fff;
+      border-bottom: 1px solid #eee;
       z-index: 100;
-      cursor: pointer;
     }
     .header h1 {
       font-size: 28px;
       font-weight: 500;
       letter-spacing: -0.02em;
     }
+    .menu-btn {
+      width: 24px;
+      height: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+    .menu-btn span {
+      width: 100%;
+      height: 2px;
+      background: #111;
+    }
 
-    /* 下拉菜单（默认收起，点击标题才滑出） */
-    .menu {
+    /* 侧边菜单：从右侧滑出（手机端） */
+    .sidebar {
       position: fixed;
-      top: -100%; /* 默认藏在屏幕外 */
-      left: 0;
-      right: 0;
+      top: 0;
+      right: -100%;
+      width: 80%;
+      max-width: 320px;
+      height: 100vh;
       background: #fff;
-      padding: 80px 25px 40px;
-      border-bottom: 1px solid #eee;
-      transition: top 0.3s ease;
+      padding: 100px 40px;
+      overflow-y: auto;
+      transition: right 0.3s ease;
       z-index: 99;
     }
-    .menu.active {
-      top: 0; /* 点击标题后滑出 */
+    .sidebar.active {
+      right: 0;
     }
-    .menu h2 {
+    .sidebar h2 {
       font-size: 28px;
       font-weight: 500;
       margin-bottom: 30px;
       letter-spacing: -0.02em;
     }
     .nav-category {
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 500;
-      margin: 25px 0 10px 0;
+      margin: 30px 0 15px 0;
       color: #111;
     }
     .nav-item {
-      font-size: 16px;
+      font-size: 20px;
       color: #666;
-      margin: 8px 0;
+      margin: 12px 0;
       cursor: pointer;
     }
     .nav-item.active,
@@ -74,16 +93,23 @@
       color: #000;
       font-weight: 500;
     }
+    .close-btn {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      font-size: 30px;
+      cursor: pointer;
+    }
 
-    /* 主内容：竖向大图（彻底无边框） */
+    /* 主内容：竖向大图（无边框） */
     .main {
-      margin-top: 80px; /* 只给顶部标题留空间，菜单默认不占位置 */
-      padding: 0 20px 40px;
+      margin-top: 80px;
+      padding: 30px 20px;
     }
     .work-group {
       display: none;
       flex-direction: column;
-      gap: 30px;
+      gap: 40px;
     }
     .work-group.active {
       display: flex;
@@ -101,7 +127,7 @@
     .work-img {
       width: 100%;
       height: auto;
-      /* 彻底无边框：无任何 border 代码 */
+      /* 彻底无边框 */
     }
 
     /* 电脑端：左右分栏 */
@@ -109,18 +135,18 @@
       .header {
         display: none;
       }
-      .menu {
+      .sidebar {
         position: fixed;
         top: 0;
         left: 0;
+        right: auto;
         width: 260px;
         height: 100vh;
         padding: 60px 45px;
         border-right: 1px solid #eee;
-        border-bottom: none;
         transition: none;
       }
-      .menu h2 {
+      .sidebar h2 {
         font-size: 26px;
         margin-bottom: 50px;
       }
@@ -130,6 +156,9 @@
       }
       .nav-item {
         font-size: 14px;
+      }
+      .close-btn {
+        display: none;
       }
       .main {
         margin-top: 0;
@@ -159,51 +188,54 @@
 </head>
 <body>
 
-<!-- 顶部标题（点击展开菜单） -->
-<div class="header" id="header">
+<!-- 手机端顶部栏 -->
+<div class="header">
   <h1>510521199509080024</h1>
+  <div class="menu-btn" id="menuBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </div>
 
-<!-- 下拉菜单（手机端默认收起） -->
-<div class="menu" id="menu">
+<!-- 侧边菜单 -->
+<div class="sidebar" id="sidebar">
+  <div class="close-btn" id="closeBtn">×</div>
   <h2>510521199509080024</h2>
 
-  <div class="nav-category">好朋友</div>
-  <div class="nav-item active" data-target="friend">好朋友</div>
+  <div class="nav-category">Silence</div>
+  <div class="nav-item active" data-target="silence-1">Where the Light Rests</div>
+  <div class="nav-item" data-target="silence-2">Cinematic Grain and Glow</div>
 
-  <div class="nav-category">交易</div>
-  <div class="nav-item" data-target="trade">交易</div>
+  <div class="nav-category">Street</div>
+  <div class="nav-item" data-target="street-1">China 2020–2022</div>
+  <div class="nav-item" data-target="street-2">Echoes of Cuba | Havana 2024</div>
+  <div class="nav-item" data-target="street-3">City That Breathes | NY 2025</div>
+  <div class="nav-item" data-target="street-4">A Sense of Order | Tokyo 2025</div>
 
-  <div class="nav-category">回音</div>
-  <div class="nav-item" data-target="echo">回音</div>
+  <div class="nav-category">Polaroids</div>
+  <div class="nav-item" data-target="polaroids-1">Friends in Polaroids</div>
+  <div class="nav-item" data-target="polaroids-2">The Archive</div>
 
   <div class="nav-category">About</div>
-  <div class="nav-item" data-target="about">About</div>
+  <div class="nav-item" data-target="about">About HAWK</div>
 </div>
 
 <!-- 主内容区 -->
 <div class="main">
-  <div class="work-group active" id="friend">
+  <div class="work-group active" id="silence-1">
     <div class="work-item active">
-      <img src="https://mmbiz.qpic.cn/mmbiz_jpg/ZisNqcfUDZB9d8FmTVkNQ0U9G0tX9Q8iaia4Xt0s8iaic0iaic0iaic0iaic0iaic0iaic0iaic0iaic0iaic/640?wx_fmt=jpeg" class="work-img">
+      <img src="https://images.unsplash.com/photo-1556740755-069a40165b40?q=80&w=2000&auto=format&fit=crop" class="work-img">
     </div>
   </div>
-
-  <div class="work-group" id="trade">
+  <div class="work-group" id="street-1">
     <div class="work-item active">
-      <img src="cover-2.jpg" class="work-img">
+      <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=2000&auto=format&fit=crop" class="work-img">
     </div>
   </div>
-
-  <div class="work-group" id="echo">
-    <div class="work-item active">
-      <img src="cover-3.jpg" class="work-img">
-    </div>
-  </div>
-
   <div class="work-group" id="about" style="display:none;">
     <div class="work-item active" style="height:auto;">
-      <div style="font-size:15px; line-height:1.8; color:#333;">
+      <div style="font-size:15px; line-height:1.8;">
         Visual & performance art practice.<br>
         Body, identity, space.<br><br>
         © 510521199509080024
@@ -213,22 +245,22 @@
 </div>
 
 <script>
-  // 菜单展开/收起
-  const header = document.getElementById('header');
-  const menu = document.getElementById('menu');
+  // 菜单开关
+  const menuBtn = document.getElementById('menuBtn');
+  const closeBtn = document.getElementById('closeBtn');
+  const sidebar = document.getElementById('sidebar');
 
-  header.addEventListener('click', () => {
-    menu.classList.toggle('active');
-  });
+  menuBtn.addEventListener('click', () => sidebar.classList.add('active'));
+  closeBtn.addEventListener('click', () => sidebar.classList.remove('active'));
 
   // 点击菜单外区域收起菜单
   document.addEventListener('click', (e) => {
-    if (!menu.contains(e.target) && !header.contains(e.target)) {
-      menu.classList.remove('active');
+    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+      sidebar.classList.remove('active');
     }
   });
 
-  // 作品切换 + 切换后自动收起菜单
+  // 作品切换
   const navItems = document.querySelectorAll('.nav-item');
   const workGroups = document.querySelectorAll('.work-group');
 
@@ -239,7 +271,7 @@
       document.getElementById(target).classList.add('active');
       navItems.forEach(i => i.classList.remove('active'));
       item.classList.add('active');
-      menu.classList.remove('active'); // 点击作品后自动收起菜单
+      sidebar.classList.remove('active');
     });
   });
 
@@ -249,6 +281,5 @@
   }, { threshold: 0.1 });
   document.querySelectorAll('.work-item').forEach(i => observer.observe(i));
 </script>
-
 </body>
 </html>

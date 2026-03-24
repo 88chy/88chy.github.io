@@ -5,6 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title></title>
   <style>
+    /* 原有样式保持不变，新增标题点击样式 */
+    .title-clickable {
+      cursor: pointer;
+    }
+    .title-clickable:hover {
+      opacity: 0.8; /* 点击时轻微效果 */
+    }
+    /* 其他原有样式... */
     * {
       margin: 0;
       padding: 0;
@@ -19,7 +27,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* 顶部栏：标题 + 汉堡/叉按钮（手机端） */
     .header {
       position: fixed;
       top: 0;
@@ -54,7 +61,6 @@
       background: #111;
       transition: all 0.3s ease;
     }
-    /* 菜单展开时，汉堡变成 × */
     .menu-btn.active span:nth-child(1) {
       transform: translateY(9px) rotate(45deg);
     }
@@ -65,7 +71,6 @@
       transform: translateY(-9px) rotate(-45deg);
     }
 
-    /* 侧边菜单：从右侧滑出（手机端） */
     .sidebar {
       position: fixed;
       top: 0;
@@ -83,7 +88,7 @@
       right: 0;
     }
     .sidebar h2 {
-      display: none; /* 手机端不显示重复标题 */
+      display: none;
     }
     .nav-category {
       font-size: 22px;
@@ -103,7 +108,6 @@
       font-weight: 500;
     }
 
-    /* 主内容：竖向大图（无边框） */
     .main {
       margin-top: 80px;
       padding: 30px 20px;
@@ -129,10 +133,8 @@
     .work-img {
       width: 100%;
       height: auto;
-      /* 彻底无边框 */
     }
 
-    /* 电脑端：左右分栏 */
     @media (min-width: 769px) {
       .header {
         display: none;
@@ -187,7 +189,6 @@
       }
     }
 
-    /* 主页占位样式 */
     .home-placeholder {
       width: 100%;
       height: 75vh;
@@ -201,9 +202,9 @@
 </head>
 <body>
 
-<!-- 手机端顶部栏 -->
 <div class="header">
-  <h1>510521100509080024</h1>
+  <!-- 顶部标题添加点击事件 -->
+  <h1 class="title-clickable" id="headerTitle">510521199509080024</h1>
   <div class="menu-btn" id="menuBtn">
     <span></span>
     <span></span>
@@ -211,9 +212,9 @@
   </div>
 </div>
 
-<!-- 侧边菜单（保持原内容不变） -->
 <div class="sidebar" id="sidebar">
-  <h2>510521100509080024</h2>
+  <!-- 侧边栏标题添加点击事件 -->
+  <h2 class="title-clickable" id="sidebarTitle">510521199509080024</h2>
 
   <div class="nav-category">(2018—2026)</div>
   <div class="nav-item" data-target="work-1">三个关于水的故事</div>
@@ -229,9 +230,7 @@
   <div class="nav-item" data-target="about">陈红羽</div>
 </div>
 
-<!-- 主内容区：默认显示主页占位，其他作品区域保持原结构 -->
 <div class="main">
-  <!-- 主页（默认显示） -->
   <div class="work-group active" id="home">
     <div class="work-item active">
       <div class="home-placeholder">
@@ -240,66 +239,33 @@
     </div>
   </div>
 
-  <!-- 原有作品区域（保持不变） -->
   <div class="work-group" id="work-1">
     <div class="work-item active">
-      <img src="https://images.unsplash.com/photo-1556740755-069a40165b40?q=80&w=2000&auto=format&fit=crop" class="work-img">
+      <img src="" class="work-img">
     </div>
   </div>
   <div class="work-group" id="work-2">
     <div class="work-item active">
-      <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=2000&auto=format&fit=crop" class="work-img">
+      <img src="" class="work-img">
     </div>
   </div>
-  <div class="work-group" id="about">
-    <div class="work-item active" style="height:auto;">
-      <div style="font-size:15px; line-height:1.8;">
-        陈红羽的个人介绍内容<br>
-        可以在这里补充具体信息<br><br>
-        © 510521100509080024
-      </div>
+  <div class="work-group" id="work-3">
+    <div class="work-item active">
+      <img src="" class="work-img">
     </div>
   </div>
-</div>
-
-<script>
-  const menuBtn = document.getElementById('menuBtn');
-  const sidebar = document.getElementById('sidebar');
-  const navItems = document.querySelectorAll('.nav-item');
-  const workGroups = document.querySelectorAll('.work-group');
-
-  // 点击汉堡按钮：切换菜单展开/收起，并切换按钮样式
-  menuBtn.addEventListener('click', () => {
-    menuBtn.classList.toggle('active');
-    sidebar.classList.toggle('active');
-  });
-
-  // 点击菜单外区域收起菜单
-  document.addEventListener('click', (e) => {
-    if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
-      menuBtn.classList.remove('active');
-      sidebar.classList.remove('active');
-    }
-  });
-
-  // 点击作品项：切换内容并收起菜单
-  navItems.forEach(item => {
-    item.addEventListener('click', () => {
-      const target = item.dataset.target;
-      workGroups.forEach(g => g.classList.remove('active'));
-      document.getElementById(target).classList.add('active');
-      navItems.forEach(i => i.classList.remove('active'));
-      item.classList.add('active');
-      menuBtn.classList.remove('active');
-      sidebar.classList.remove('active');
-    });
-  });
-
-  // 图片淡入动画
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => e.isIntersecting && e.target.classList.add('active'));
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.work-item').forEach(i => observer.observe(i));
-</script>
-</body>
-</html>
+  <div class="work-group" id="work-4">
+    <div class="work-item active">
+      <img src="" class="work-img">
+    </div>
+  </div>
+  <div class="work-group" id="work-5">
+    <div class="work-item active">
+      <img src="" class="work-img">
+    </div>
+  </div>
+  <div class="work-group" id="work-6">
+    <div class="work-item active">
+      <img src="" class="work-img">
+    </div>
+  </div>...

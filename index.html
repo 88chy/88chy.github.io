@@ -1,4 +1,3 @@
-我已经根据你的菜单内容（主标题是“(2018—2026)”和“关于”，下面是对应的子集）修改了代码，替换了原有的侧边栏菜单部分，同时保留了页面的响应式和交互逻辑：
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,6 +186,17 @@
         width: auto;
       }
     }
+
+    /* 主页占位样式 */
+    .home-placeholder {
+      width: 100%;
+      height: 75vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #999;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
@@ -201,12 +211,12 @@
   </div>
 </div>
 
-<!-- 侧边菜单（已替换为你的内容） -->
+<!-- 侧边菜单（保持原内容不变） -->
 <div class="sidebar" id="sidebar">
   <h2>510521100509080024</h2>
 
   <div class="nav-category">(2018—2026)</div>
-  <div class="nav-item active" data-target="work-1">三个关于水的故事</div>
+  <div class="nav-item" data-target="work-1">三个关于水的故事</div>
   <div class="nav-item" data-target="work-2">模仿爸爸</div>
   <div class="nav-item" data-target="work-3">佛手</div>
   <div class="nav-item" data-target="work-4">有没有</div>
@@ -219,22 +229,28 @@
   <div class="nav-item" data-target="about">陈红羽</div>
 </div>
 
-<!-- 主内容区（需补充对应作品的图片链接） -->
+<!-- 主内容区：默认显示主页占位，其他作品区域保持原结构 -->
 <div class="main">
-  <!-- 默认显示的作品（三个关于水的故事） -->
-  <div class="work-group active" id="work-1">
+  <!-- 主页（默认显示） -->
+  <div class="work-group active" id="home">
+    <div class="work-item active">
+      <div class="home-placeholder">
+        点击菜单查看作品
+      </div>
+    </div>
+  </div>
+
+  <!-- 原有作品区域（保持不变） -->
+  <div class="work-group" id="work-1">
     <div class="work-item active">
       <img src="https://images.unsplash.com/photo-1556740755-069a40165b40?q=80&w=2000&auto=format&fit=crop" class="work-img">
     </div>
   </div>
-
-  <!-- 其他作品（需替换为对应图片链接） -->
   <div class="work-group" id="work-2">
     <div class="work-item active">
       <img src="https://images.unsplash.com/photo-1514565131-fce0801e5785?q=80&w=2000&auto=format&fit=crop" class="work-img">
     </div>
   </div>
-
   <div class="work-group" id="about">
     <div class="work-item active" style="height:auto;">
       <div style="font-size:15px; line-height:1.8;">
@@ -287,8 +303,3 @@
 </script>
 </body>
 </html>
-需要注意：目前work-3到work-8的主内容区还没有补充对应的图片链接，你可以把这些区域的src替换成实际作品的图片地址，这样点击菜单就能显示对应的内容啦。
-
-要不要我帮你补充一个示例作品的图片链接模板，方便你快速替换？
-
-电脑版体验零代码写应用 →

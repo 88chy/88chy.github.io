@@ -118,7 +118,7 @@ cursor: pointer;
 font-weight: 400;
 }
 
-/* 作品内容（去掉重复大标题） */
+/* 作品内容（这里我只把圆角改成 0，其他都没动！） */
 .popup-body {
 padding: 20px;
 }
@@ -130,12 +130,12 @@ margin-bottom: 24px;
 }
 .popup-body img {
 width: 100%;
-border-radius: 10px;
+border-radius: 0;          /* 这里改成直角！ */
 margin-bottom: 16px;
 cursor: zoom-in;
 }
 
-/* 全屏看图 */
+/* 全屏看图 + 左右滑动 */
 .zoom {
 position: fixed;
 inset: 0;
@@ -152,6 +152,7 @@ display: flex;
 max-width: 96%;
 max-height: 96vh;
 object-fit: contain;
+user-select: none;
 }
 </style>
 </head>
@@ -194,9 +195,21 @@ object-fit: contain;
 </div>
 <div class="popup-body">
 <p class="desc">大卫·霍克尼经典代表作，以高饱和色彩、平面化光影构成独特的加州风格。</p>
-<img src="https://picsum.photos/id/10/800/600" onclick="openZoom(this.src)">
-<img src="https://picsum.photos/id/13/800/600" onclick="openZoom(this.src)">
-<img src="https://picsum.photos/id/14/800/600" onclick="openZoom(this.src)">
+<img src="https://picsum.photos/id/10/800/600" onclick="openZoom(0, [
+'https://picsum.photos/id/10/800/600',
+'https://picsum.photos/id/13/800/600',
+'https://picsum.photos/id/14/800/600'
+])">
+<img src="https://picsum.photos/id/13/800/600" onclick="openZoom(1, [
+'https://picsum.photos/id/10/800/600',
+'https://picsum.photos/id/13/800/600',
+'https://picsum.photos/id/14/800/600'
+])">
+<img src="https://picsum.photos/id/14/800/600" onclick="openZoom(2, [
+'https://picsum.photos/id/10/800/600',
+'https://picsum.photos/id/13/800/600',
+'https://picsum.photos/id/14/800/600'
+])">
 </div>
 </div>
 
@@ -208,7 +221,9 @@ object-fit: contain;
 </div>
 <div class="popup-body">
 <p class="desc">霍克尼使用多段摄影拼贴，打破单一透视，呈现时间与空间的叠加。</p>
-<img src="https://picsum.photos/id/11/800/600" onclick="openZoom(this.src)">
+<img src="https://picsum.photos/id/11/800/600" onclick="openZoom(0, [
+'https://picsum.photos/id/11/800/600'
+])">
 </div>
 </div>
 
@@ -218,27 +233,64 @@ object-fit: contain;
 </div>
 
 <script>
-let current = null;
+let currentPopup = null;
+let zoomImages = [];
+let currentZoomIndex = 0;
+
 function openWork(n) {
 closeWork();
-current = document.getElementById('work'+n);
-current.classList.add('show');
+currentPopup = document.getElementById('work'+n);
+currentPopup.classList.add('show');
 document.body.style.overflow = 'hidden';
 }
+
 function closeWork() {
-if (current) {
-current.classList.remove('show');
-current = null;
+if (currentPopup) {
+currentPopup.classList.remove('show');
+currentPopup = null;
 }
 document.body.style.overflow = 'auto';
 closeZoom();
 }
-function openZoom(src) {
-document.getElementById('zoomImg').src = src;
+
+// 打开大图，并传入当前是第几张 + 全部图列表
+function openZoom(index, list) {
+currentZoomIndex = index;
+zoomImages = list;
+document.getElementById('zoomImg').src = zoomImages[currentZoomIndex];
 document.getElementById('zoomLayer').classList.add('show');
 }
+
 function closeZoom() {
 document.getElementById('zoomLayer').classList.remove('show');
+}
+
+// 左右滑动切换图片
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.getElementById('zoomLayer').addEventListener('touchstart', function(e) {
+touchStartX = e.changedTouches[0].screenX;
+});
+
+document.getElementById('zoomLayer').addEventListener('touchend', function(e) {
+touchEndX = e.changedTouches[0].screenX;
+handleSwipe();
+});
+
+function handleSwipe() {
+if (touchEndX < touchStartX - 50) {
+// 向左滑 → 下一张
+currentZoomIndex++;
+if (currentZoomIndex >= zoomImages.length) currentZoomIndex = 0;
+document.getElementById('zoomImg').src = zoomImages[currentZoomIndex];
+}
+if (touchEndX > touchStartX + 50) {
+// 向右滑 → 上一张
+currentZoomIndex--;
+if (currentZoomIndex < 0) currentZoomIndex = zoomImages.length - 1;
+document.getElementById('zoomImg').src = zoomImages[currentZoomIndex];
+}
 }
 </script>
 

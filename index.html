@@ -17,7 +17,23 @@ background: #FFFFFF;
 color: #111111;
 }
 
-/* 顶部名字 */
+/* 缓慢出现动画（修复白块：图片加载完成再触发） */
+.fade-in {
+opacity: 0;
+transform: translateY(10px);
+transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+.fade-in.show {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* 图片加载占位背景，避免白块 */
+.popup-body img {
+background: #f5f5f5;
+min-height: 200px;
+}
+
 .top-name {
 padding: 22px 20px 10px;
 font-size: 24px;
@@ -25,7 +41,6 @@ font-weight: 700;
 letter-spacing: -0.2px;
 }
 
-/* Tab 导航 */
 .tab-bar {
 display: flex;
 padding: 0 20px 12px;
@@ -54,7 +69,6 @@ height: 2px;
 background: #111;
 }
 
-/* 作品网格 */
 .grid {
 display: grid;
 grid-template-columns: repeat(2, 1fr);
@@ -62,7 +76,6 @@ gap: 12px;
 padding: 16px 12px 40px;
 }
 
-/* Behance 卡片（只留标题） */
 .card {
 display: block;
 text-decoration: none;
@@ -75,6 +88,7 @@ aspect-ratio: 4/3;
 object-fit: cover;
 border-radius: 12px;
 display: block;
+background: #f5f5f5;
 }
 .card-bottom {
 padding: 8px 2px 0;
@@ -85,7 +99,6 @@ font-weight: 600;
 line-height: 1.2;
 }
 
-/* 弹出作品页 */
 .popup {
 position: fixed;
 inset: 0;
@@ -118,7 +131,6 @@ cursor: pointer;
 font-weight: 400;
 }
 
-/* 作品内容（这里我只把圆角改成 0，其他都没动！） */
 .popup-body {
 padding: 20px;
 }
@@ -130,39 +142,55 @@ margin-bottom: 24px;
 }
 .popup-body img {
 width: 100%;
-border-radius: 0;          /* 这里改成直角！ */
+border-radius: 0;
 margin-bottom: 16px;
 cursor: zoom-in;
 }
 
-/* 全屏看图 + 左右滑动 */
+/* 全屏看图容器（支持平滑拖动） */
 .zoom {
 position: fixed;
 inset: 0;
 background: rgba(0,0,0,0.95);
 z-index: 1000;
 display: none;
-align-items: center;
-justify-content: center;
+overflow: hidden;
 }
 .zoom.show {
 display: flex;
 }
-.zoom img {
+.zoom-wrap {
+display: flex;
+height: 100%;
+transition: transform 0.3s ease-out;
+}
+.zoom-item {
+width: 100vw;
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+flex-shrink: 0;
+background: #000;
+}
+.zoom-item img {
 max-width: 96%;
 max-height: 96vh;
 object-fit: contain;
 user-select: none;
+opacity: 0;
+transition: opacity 0.2s ease-out;
+}
+.zoom-item img.loaded {
+opacity: 1;
 }
 </style>
 </head>
 
 <body>
 
-<!-- 顶部名字 -->
 <div class="top-name">大卫·霍克尼</div>
 
-<!-- Tab -->
 <div class="tab-bar">
 <span class="active">作品</span>
 <span>关于我</span>
@@ -170,16 +198,15 @@ user-select: none;
 <span>联系方式</span>
 </div>
 
-<!-- 作品列表 -->
 <div class="grid">
-<div class="card" onclick="openWork(1)">
+<div class="card fade-in" onclick="openWork(1)">
 <img class="card-img" src="https://picsum.photos/id/10/600/450">
 <div class="card-bottom">
 <div class="card-title">泳池与阳光</div>
 </div>
 </div>
 
-<div class="card" onclick="openWork(2)">
+<div class="card fade-in" onclick="openWork(2)">
 <img class="card-img" src="https://picsum.photos/id/11/600/450">
 <div class="card-bottom">
 <div class="card-title">山水拼贴</div>
@@ -187,111 +214,156 @@ user-select: none;
 </div>
 </div>
 
-<!-- 作品1 弹出页 -->
 <div class="popup" id="work1">
 <div class="popup-head">
 <div class="title">泳池与阳光</div>
 <div class="popup-close" onclick="closeWork()">×</div>
 </div>
 <div class="popup-body">
-<p class="desc">大卫·霍克尼经典代表作，以高饱和色彩、平面化光影构成独特的加州风格。</p>
-<img src="https://picsum.photos/id/10/800/600" onclick="openZoom(0, [
+<p class="desc fade-in">大卫·霍克尼经典代表作，以高饱和色彩、平面化光影构成独特的加州风格。</p>
+<img class="fade-in" src="https://picsum.photos/id/10/800/600" onclick="openZoom([
 'https://picsum.photos/id/10/800/600',
 'https://picsum.photos/id/13/800/600',
 'https://picsum.photos/id/14/800/600'
-])">
-<img src="https://picsum.photos/id/13/800/600" onclick="openZoom(1, [
+], 0)">
+<img class="fade-in" src="https://picsum.photos/id/13/800/600" onclick="openZoom([
 'https://picsum.photos/id/10/800/600',
 'https://picsum.photos/id/13/800/600',
 'https://picsum.photos/id/14/800/600'
-])">
-<img src="https://picsum.photos/id/14/800/600" onclick="openZoom(2, [
+], 1)">
+<img class="fade-in" src="https://picsum.photos/id/14/800/600" onclick="openZoom([
 'https://picsum.photos/id/10/800/600',
 'https://picsum.photos/id/13/800/600',
 'https://picsum.photos/id/14/800/600'
-])">
+], 2)">
 </div>
 </div>
 
-<!-- 作品2 弹出页 -->
 <div class="popup" id="work2">
 <div class="popup-head">
 <div class="title">山水拼贴</div>
 <div class="popup-close" onclick="closeWork()">×</div>
 </div>
 <div class="popup-body">
-<p class="desc">霍克尼使用多段摄影拼贴，打破单一透视，呈现时间与空间的叠加。</p>
-<img src="https://picsum.photos/id/11/800/600" onclick="openZoom(0, [
+<p class="desc fade-in">霍克尼使用多段摄影拼贴，打破单一透视，呈现时间与空间的叠加。</p>
+<img class="fade-in" src="https://picsum.photos/id/11/800/600" onclick="openZoom([
 'https://picsum.photos/id/11/800/600'
-])">
+], 0)">
 </div>
 </div>
 
-<!-- 全屏放大 -->
-<div class="zoom" id="zoomLayer" onclick="closeZoom()">
-<img id="zoomImg">
+<div class="zoom" id="zoomLayer">
+  <div class="zoom-wrap" id="zoomWrap"></div>
 </div>
 
 <script>
 let currentPopup = null;
-let zoomImages = [];
-let currentZoomIndex = 0;
+let zoomList = [];
+let currentIdx = 0;
+let startX = 0;
+let offsetX = 0;
+let isDragging = false;
+
+// 缓慢出现监听（修复白块：图片加载完成再触发淡入）
+function watchFade() {
+  const els = document.querySelectorAll('.fade-in');
+  const ob = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) {
+        // 如果是图片，等加载完成再显示
+        if (e.target.tagName === 'IMG') {
+          if (e.target.complete) {
+            e.target.classList.add('show');
+          } else {
+            e.target.onload = () => e.target.classList.add('show');
+          }
+        } else {
+          e.target.classList.add('show');
+        }
+      }
+    });
+  }, { threshold: 0.1 });
+  els.forEach(i => ob.observe(i));
+}
+
+window.addEventListener('DOMContentLoaded', watchFade);
 
 function openWork(n) {
-closeWork();
-currentPopup = document.getElementById('work'+n);
-currentPopup.classList.add('show');
-document.body.style.overflow = 'hidden';
+  closeWork();
+  currentPopup = document.getElementById('work'+n);
+  currentPopup.classList.add('show');
+  document.body.style.overflow = 'hidden';
+  setTimeout(watchFade, 100);
 }
 
 function closeWork() {
-if (currentPopup) {
-currentPopup.classList.remove('show');
-currentPopup = null;
-}
-document.body.style.overflow = 'auto';
-closeZoom();
+  if (currentPopup) {
+    currentPopup.classList.remove('show');
+    currentPopup = null;
+  }
+  document.body.style.overflow = 'auto';
+  closeZoom();
 }
 
-// 打开大图，并传入当前是第几张 + 全部图列表
-function openZoom(index, list) {
-currentZoomIndex = index;
-zoomImages = list;
-document.getElementById('zoomImg').src = zoomImages[currentZoomIndex];
-document.getElementById('zoomLayer').classList.add('show');
+// 打开全屏图集（修复白块：图片加载完成再显示）
+function openZoom(images, startIndex) {
+  currentIdx = startIndex;
+  zoomList = images;
+  const wrap = document.getElementById('zoomWrap');
+  wrap.innerHTML = '';
+
+  images.forEach((src, index) => {
+    const item = document.createElement('div');
+    item.className = 'zoom-item';
+    const img = document.createElement('img');
+    img.src = src;
+    // 图片加载完成再淡入，彻底消除白块
+    img.onload = () => img.classList.add('loaded');
+    item.appendChild(img);
+    wrap.appendChild(item);
+  });
+
+  wrap.style.transform = `translateX(-${currentIdx * 100}vw)`;
+  document.getElementById('zoomLayer').classList.add('show');
 }
 
 function closeZoom() {
-document.getElementById('zoomLayer').classList.remove('show');
+  document.getElementById('zoomLayer').classList.remove('show');
 }
 
-// 左右滑动切换图片
-let touchStartX = 0;
-let touchEndX = 0;
+const wrap = document.getElementById('zoomWrap');
 
-document.getElementById('zoomLayer').addEventListener('touchstart', function(e) {
-touchStartX = e.changedTouches[0].screenX;
+wrap.addEventListener('touchstart', e => {
+  isDragging = true;
+  startX = e.touches[0].clientX;
+  offsetX = 0;
+  wrap.style.transition = 'none';
 });
 
-document.getElementById('zoomLayer').addEventListener('touchend', function(e) {
-touchEndX = e.changedTouches[0].screenX;
-handleSwipe();
+wrap.addEventListener('touchmove', e => {
+  if (!isDragging) return;
+  const x = e.touches[0].clientX;
+  offsetX = x - startX;
+  const move = -currentIdx * window.innerWidth + offsetX;
+  wrap.style.transform = `translateX(${move}px)`;
 });
 
-function handleSwipe() {
-if (touchEndX < touchStartX - 50) {
-// 向左滑 → 下一张
-currentZoomIndex++;
-if (currentZoomIndex >= zoomImages.length) currentZoomIndex = 0;
-document.getElementById('zoomImg').src = zoomImages[currentZoomIndex];
-}
-if (touchEndX > touchStartX + 50) {
-// 向右滑 → 上一张
-currentZoomIndex--;
-if (currentZoomIndex < 0) currentZoomIndex = zoomImages.length - 1;
-document.getElementById('zoomImg').src = zoomImages[currentZoomIndex];
-}
-}
+wrap.addEventListener('touchend', () => {
+  isDragging = false;
+  const w = window.innerWidth;
+  const threshold = w * 0.2;
+
+  if (offsetX < -threshold) {
+    currentIdx = Math.min(currentIdx + 1, zoomList.length - 1);
+  } else if (offsetX > threshold) {
+    currentIdx = Math.max(currentIdx - 1, 0);
+  }
+
+  wrap.style.transition = 'transform 0.3s ease-out';
+  wrap.style.transform = `translateX(-${currentIdx * w}px)`;
+});
+
+document.getElementById('zoomLayer').addEventListener('click', closeZoom);
 </script>
 
 </body>

@@ -2,288 +2,188 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>大卫·霍克尼 | 作品集</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>陈红羽 | 作品集2017-2026</title>
 <style>
 * {
-margin: 0;
-padding: 0;
-box-sizing: border-box;
-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-background: #FFFFFF;
-color: #111111;
+  background: #fff;
+  color: #111;
+  padding-bottom: 60px;
 }
 
-/* 缓慢出现动画（修复白块：图片加载完成再触发） */
 .fade-in {
-opacity: 0;
-transform: translateY(10px);
-transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 .fade-in.show {
-opacity: 1;
-transform: translateY(0);
-}
-
-/* 图片加载占位背景，避免白块 */
-.popup-body img {
-background: #f5f5f5;
-min-height: 200px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .top-name {
-padding: 22px 20px 10px;
-font-size: 24px;
-font-weight: 700;
-letter-spacing: -0.2px;
+  padding: 28px 24px 12px;
+  font-size: 24px;
+  font-weight: 700;
 }
 
 .tab-bar {
-display: flex;
-padding: 0 20px 12px;
-gap: 22px;
-font-size: 15px;
-border-bottom: 1px solid #EEEEEE;
+  display: flex;
+  gap: 26px;
+  padding: 0 24px 16px;
+  border-bottom: 1px solid #eee;
+  font-size: 15px;
 }
 .tab-bar span {
-font-weight: 500;
-color: #888888;
-padding-bottom: 6px;
-cursor: pointer;
-position: relative;
+  font-weight: 500;
+  color: #888;
+  padding-bottom: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  position: relative;
 }
 .tab-bar span.active {
-font-weight: 600;
-color: #111111;
+  font-weight: 600;
+  color: #111;
 }
 .tab-bar span.active::after {
-content: '';
-position: absolute;
-bottom: 0;
-left: 0;
-width: 100%;
-height: 2px;
-background: #111;
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: #111;
 }
 
 .grid {
-display: grid;
-grid-template-columns: repeat(2, 1fr);
-gap: 12px;
-padding: 16px 12px 40px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  padding: 28px 24px;
 }
 
 .card {
-display: block;
-text-decoration: none;
-color: inherit;
-cursor: pointer;
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 .card-img {
-width: 100%;
-aspect-ratio: 4/3;
-object-fit: cover;
-border-radius: 12px;
-display: block;
-background: #f5f5f5;
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #f7f7f7;
 }
 .card-bottom {
-padding: 8px 2px 0;
+  padding-top: 10px;
 }
 .card-title {
-font-size: 14px;
-font-weight: 600;
-line-height: 1.2;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.3;
 }
 
 .popup {
-position: fixed;
-inset: 0;
-background: #fff;
-z-index: 999;
-overflow-y: auto;
-display: none;
+  position: fixed;
+  inset: 0;
+  background: #fff;
+  z-index: 999;
+  overflow-y: auto;
+  display: none;
 }
 .popup.show {
-display: block;
+  display: block;
 }
 .popup-head {
-position: sticky;
-top: 0;
-background: #fff;
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 16px 20px;
-border-bottom: 1px solid #eee;
+  position: sticky;
+  top: 0;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #eee;
 }
 .popup-head .title {
-font-size: 16px;
-font-weight: 600;
+  font-size: 16px;
+  font-weight: 600;
 }
 .popup-close {
-font-size: 22px;
-padding: 0 8px;
-cursor: pointer;
-font-weight: 400;
+  font-size: 22px;
+  cursor: pointer;
 }
 
 .popup-body {
-padding: 20px;
+  padding: 0;
 }
-.popup-body .desc {
-font-size: 15px;
-line-height: 1.5;
-color: #222;
-margin-bottom: 24px;
+.popup-body img,
+.popup-body video {
+  width: 100%;
+  border-radius: 0;
+  display: block;
+  background: #f7f7f7;
 }
-.popup-body img {
-width: 100%;
-border-radius: 0;
-margin-bottom: 16px;
-cursor: zoom-in;
-}
-
-/* 全屏看图容器（支持平滑拖动） */
-.zoom {
-position: fixed;
-inset: 0;
-background: rgba(0,0,0,0.95);
-z-index: 1000;
-display: none;
-overflow: hidden;
-}
-.zoom.show {
-display: flex;
-}
-.zoom-wrap {
-display: flex;
-height: 100%;
-transition: transform 0.3s ease-out;
-}
-.zoom-item {
-width: 100vw;
-height: 100%;
-display: flex;
-align-items: center;
-justify-content: center;
-flex-shrink: 0;
-background: #000;
-}
-.zoom-item img {
-max-width: 96%;
-max-height: 96vh;
-object-fit: contain;
-user-select: none;
-opacity: 0;
-transition: opacity 0.2s ease-out;
-}
-.zoom-item img.loaded {
-opacity: 1;
+.popup-body video {
+  min-height: 200px;
 }
 </style>
 </head>
 
 <body>
 
-<div class="top-name">大卫·霍克尼</div>
+<div class="top-name">陈红羽</div>
 
 <div class="tab-bar">
-<span class="active">作品</span>
-<span>关于我</span>
-<span>展览</span>
-<span>联系方式</span>
+  <span class="active">作品2017-2026</span>
+  <span>关于</span>
+  <span>展览</span>
+  <span>联系方式</span>
 </div>
 
 <div class="grid">
-<div class="card fade-in" onclick="openWork(1)">
-<img class="card-img" src="https://picsum.photos/id/10/600/450">
-<div class="card-bottom">
-<div class="card-title">泳池与阳光</div>
-</div>
-</div>
-
-<div class="card fade-in" onclick="openWork(2)">
-<img class="card-img" src="https://picsum.photos/id/11/600/450">
-<div class="card-bottom">
-<div class="card-title">山水拼贴</div>
-</div>
-</div>
+  <div class="card fade-in" onclick="openWork(1)"><img class="card-img" src="https://picsum.photos/600/450?1"><div class="card-bottom"><div class="card-title">写字在贴纸上</div></div></div>
+  <div class="card fade-in" onclick="openWork(2)"><img class="card-img" src="https://picsum.photos/600/450?2"><div class="card-bottom"><div class="card-title">回音直播</div></div></div>
+  <div class="card fade-in" onclick="openWork(3)"><img class="card-img" src="https://picsum.photos/600/450?3"><div class="card-bottom"><div class="card-title">回音</div></div></div>
+  <div class="card fade-in" onclick="openWork(4)"><img class="card-img" src="https://picsum.photos/600/450?4"><div class="card-bottom"><div class="card-title">佛手</div></div></div>
+  <div class="card fade-in" onclick="openWork(5)"><img class="card-img" src="https://picsum.photos/600/450?5"><div class="card-bottom"><div class="card-title">交易</div></div></div>
+  <div class="card fade-in" onclick="openWork(6)"><img class="card-img" src="https://picsum.photos/600/450?6"><div class="card-bottom"><div class="card-title">有没有</div></div></div>
+  <div class="card fade-in" onclick="openWork(7)"><img class="card-img" src="https://picsum.photos/600/450?7"><div class="card-bottom"><div class="card-title">人体写生</div></div></div>
+  <div class="card fade-in" onclick="openWork(8)"><img class="card-img" src="https://picsum.photos/600/450?8"><div class="card-bottom"><div class="card-title">城市里的狗</div></div></div>
+  <div class="card fade-in" onclick="openWork(9)"><img class="card-img" src="https://picsum.photos/600/450?9"><div class="card-bottom"><div class="card-title">好朋友</div></div></div>
+  <div class="card fade-in" onclick="openWork(10)"><img class="card-img" src="https://picsum.photos/600/450?10"><div class="card-bottom"><div class="card-title">毕业之后在深圳上班</div></div></div>
+  <div class="card fade-in" onclick="openWork(11)"><img class="card-img" src="https://picsum.photos/600/450?11"><div class="card-bottom"><div class="card-title">你怎么了，给妈妈说说</div></div></div>
 </div>
 
-<div class="popup" id="work1">
-<div class="popup-head">
-<div class="title">泳池与阳光</div>
-<div class="popup-close" onclick="closeWork()">×</div>
-</div>
-<div class="popup-body">
-<p class="desc fade-in">大卫·霍克尼经典代表作，以高饱和色彩、平面化光影构成独特的加州风格。</p>
-<img class="fade-in" src="https://picsum.photos/id/10/800/600" onclick="openZoom([
-'https://picsum.photos/id/10/800/600',
-'https://picsum.photos/id/13/800/600',
-'https://picsum.photos/id/14/800/600'
-], 0)">
-<img class="fade-in" src="https://picsum.photos/id/13/800/600" onclick="openZoom([
-'https://picsum.photos/id/10/800/600',
-'https://picsum.photos/id/13/800/600',
-'https://picsum.photos/id/14/800/600'
-], 1)">
-<img class="fade-in" src="https://picsum.photos/id/14/800/600" onclick="openZoom([
-'https://picsum.photos/id/10/800/600',
-'https://picsum.photos/id/13/800/600',
-'https://picsum.photos/id/14/800/600'
-], 2)">
-</div>
-</div>
-
-<div class="popup" id="work2">
-<div class="popup-head">
-<div class="title">山水拼贴</div>
-<div class="popup-close" onclick="closeWork()">×</div>
-</div>
-<div class="popup-body">
-<p class="desc fade-in">霍克尼使用多段摄影拼贴，打破单一透视，呈现时间与空间的叠加。</p>
-<img class="fade-in" src="https://picsum.photos/id/11/800/600" onclick="openZoom([
-'https://picsum.photos/id/11/800/600'
-], 0)">
-</div>
-</div>
-
-<div class="zoom" id="zoomLayer">
-  <div class="zoom-wrap" id="zoomWrap"></div>
-</div>
+<div class="popup" id="work1"><div class="popup-head"><div class="title">写字在贴纸上</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<div class="popup" id="work2"><div class="popup-head"><div class="title">回音直播</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1OnBUr5a5v2L66IYj_-UBmg?pwd=B5e6"></div></div>
+<div class="popup" id="work3"><div class="popup-head"><div class="title">回音</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<div class="popup" id="work4"><div class="popup-head"><div class="title">佛手</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<div class="popup" id="work5"><div class="popup-head"><div class="title">交易</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<div class="popup" id="work6"><div class="popup-head"><div class="title">有没有</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<div class="popup" id="work7"><div class="popup-head"><div class="title">人体写生</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<div class="popup" id="work8"><div class="popup-head"><div class="title">城市里的狗</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><video class="fade-in" controls><source src="https://pan.baidu.com/s/1jjfW4UD2ShaSdPhsjCYt_Q?pwd=8zL9" type="video/mp4"></video></div></div>
+<div class="popup" id="work9"><div class="popup-head"><div class="title">好朋友</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1TweqSvr6E1yeI66DKdxQmg?pwd=16Ua"></div></div>
+<div class="popup" id="work10"><div class="popup-head"><div class="title">毕业之后在深圳上班</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1hWNqLfzK1UnRMoocTFBEwA?pwd=23ZB"></div></div>
+<div class="popup" id="work11"><div class="popup-head"><div class="title">你怎么了，给妈妈说说</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1aL1DuhMWX7X3pKghegLlpw?pwd=MoL8"></div></div>
 
 <script>
 let currentPopup = null;
-let zoomList = [];
-let currentIdx = 0;
-let startX = 0;
-let offsetX = 0;
-let isDragging = false;
 
-// 缓慢出现监听（修复白块：图片加载完成再触发淡入）
 function watchFade() {
   const els = document.querySelectorAll('.fade-in');
   const ob = new IntersectionObserver(es => {
-    es.forEach(e => {
-      if (e.isIntersecting) {
-        // 如果是图片，等加载完成再显示
-        if (e.target.tagName === 'IMG') {
-          if (e.target.complete) {
-            e.target.classList.add('show');
-          } else {
-            e.target.onload = () => e.target.classList.add('show');
-          }
-        } else {
-          e.target.classList.add('show');
-        }
-      }
-    });
+    es.forEach(e => e.isIntersecting && e.target.classList.add('show'));
   }, { threshold: 0.1 });
-  els.forEach(i => ob.observe(i));
+  els.forEach(el => ob.observe(el));
 }
 
 window.addEventListener('DOMContentLoaded', watchFade);
@@ -302,68 +202,7 @@ function closeWork() {
     currentPopup = null;
   }
   document.body.style.overflow = 'auto';
-  closeZoom();
 }
-
-// 打开全屏图集（修复白块：图片加载完成再显示）
-function openZoom(images, startIndex) {
-  currentIdx = startIndex;
-  zoomList = images;
-  const wrap = document.getElementById('zoomWrap');
-  wrap.innerHTML = '';
-
-  images.forEach((src, index) => {
-    const item = document.createElement('div');
-    item.className = 'zoom-item';
-    const img = document.createElement('img');
-    img.src = src;
-    // 图片加载完成再淡入，彻底消除白块
-    img.onload = () => img.classList.add('loaded');
-    item.appendChild(img);
-    wrap.appendChild(item);
-  });
-
-  wrap.style.transform = `translateX(-${currentIdx * 100}vw)`;
-  document.getElementById('zoomLayer').classList.add('show');
-}
-
-function closeZoom() {
-  document.getElementById('zoomLayer').classList.remove('show');
-}
-
-const wrap = document.getElementById('zoomWrap');
-
-wrap.addEventListener('touchstart', e => {
-  isDragging = true;
-  startX = e.touches[0].clientX;
-  offsetX = 0;
-  wrap.style.transition = 'none';
-});
-
-wrap.addEventListener('touchmove', e => {
-  if (!isDragging) return;
-  const x = e.touches[0].clientX;
-  offsetX = x - startX;
-  const move = -currentIdx * window.innerWidth + offsetX;
-  wrap.style.transform = `translateX(${move}px)`;
-});
-
-wrap.addEventListener('touchend', () => {
-  isDragging = false;
-  const w = window.innerWidth;
-  const threshold = w * 0.2;
-
-  if (offsetX < -threshold) {
-    currentIdx = Math.min(currentIdx + 1, zoomList.length - 1);
-  } else if (offsetX > threshold) {
-    currentIdx = Math.max(currentIdx - 1, 0);
-  }
-
-  wrap.style.transition = 'transform 0.3s ease-out';
-  wrap.style.transform = `translateX(-${currentIdx * w}px)`;
-});
-
-document.getElementById('zoomLayer').addEventListener('click', closeZoom);
 </script>
 
 </body>

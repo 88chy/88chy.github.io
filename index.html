@@ -6,134 +6,83 @@
 <title>陈红羽 | 作品集2017-2026</title>
 <style>
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  margin:0; padding:0; box-sizing:border-box;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
-
 body {
-  background: #fff;
-  color: #111;
-  padding-bottom: 60px;
+  background:#fff; color:#111; padding-bottom:60px;
 }
-
 .fade-in {
-  opacity: 0;
-  transform: translateY(10px);
+  opacity:0; transform:translateY(10px);
   transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
 .fade-in.show {
-  opacity: 1;
-  transform: translateY(0);
+  opacity:1; transform:translateY(0);
 }
-
 .top-name {
-  padding: 28px 24px 12px;
-  font-size: 24px;
-  font-weight: 700;
+  padding:28px 24px 12px; font-size:24px; font-weight:700;
 }
-
 .tab-bar {
-  display: flex;
-  gap: 26px;
-  padding: 0 24px 16px;
-  border-bottom: 1px solid #eee;
-  font-size: 15px;
+  display:flex; gap:26px; padding:0 24px 16px;
+  border-bottom:1px solid #eee; font-size:15px;
 }
 .tab-bar span {
-  font-weight: 500;
-  color: #888;
-  padding-bottom: 6px;
-  cursor: pointer;
-  white-space: nowrap;
-  position: relative;
+  font-weight:500; color:#888; padding-bottom:6px;
+  cursor:pointer; white-space:nowrap; position:relative;
 }
 .tab-bar span.active {
-  font-weight: 600;
-  color: #111;
+  font-weight:600; color:#111;
 }
 .tab-bar span.active::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: #111;
+  content:''; position:absolute; bottom:0; left:0;
+  width:100%; height:2px; background:#111;
 }
-
 .grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 24px;
-  padding: 28px 24px;
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:24px; padding:28px 24px;
 }
-
 .card {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
+  display:block; text-decoration:none; color:inherit; cursor:pointer;
 }
 .card-img {
-  width: 100%;
-  aspect-ratio: 4/3;
-  object-fit: cover;
-  border-radius: 12px;
-  background: #f7f7f7;
+  width:100%; aspect-ratio:4/3; object-fit:cover;
+  border-radius:12px; background:#f7f7f7;
+  loading:lazy;
 }
 .card-bottom {
-  padding-top: 10px;
+  padding-top:10px;
 }
 .card-title {
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.3;
+  font-size:14px; font-weight:600; line-height:1.3;
 }
-
 .popup {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  z-index: 999;
-  overflow-y: auto;
-  display: none;
+  position:fixed; inset:0; background:#fff; z-index:999;
+  overflow-y:auto; display:none;
 }
 .popup.show {
-  display: block;
+  display:block;
 }
 .popup-head {
-  position: sticky;
-  top: 0;
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid #eee;
+  position:sticky; top:0; background:#fff;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:20px 24px; border-bottom:1px solid #eee;
 }
 .popup-head .title {
-  font-size: 16px;
-  font-weight: 600;
+  font-size:16px; font-weight:600;
 }
 .popup-close {
-  font-size: 22px;
-  cursor: pointer;
+  font-size:22px; cursor:pointer;
 }
-
 .popup-body {
-  padding: 0;
+  padding:0;
 }
 .popup-body img,
 .popup-body video {
-  width: 100%;
-  border-radius: 0;
-  display: block;
-  background: #f7f7f7;
+  width:100%; border-radius:0; display:block; background:#f7f7f7;
+  loading:lazy;
 }
 .popup-body video {
-  min-height: 200px;
+  min-height:200px;
 }
 </style>
 </head>
@@ -151,28 +100,28 @@ body {
 
 <div class="grid">
   <div class="card fade-in" onclick="openWork(1)"><img class="card-img" src="https://picsum.photos/600/450?1"><div class="card-bottom"><div class="card-title">写字在贴纸上</div></div></div>
-  <div class="card fade-in" onclick="openWork(2)"><img class="card-img" src="/images/c07a69fe6v35a3f7118a810270beee63.png"><div class="card-bottom"><div class="card-title">回音直播</div></div></div>
-  <div class="card fade-in" onclick="openWork(3)"><img class="card-img" src="/images/IMG_1189.jpeg"><div class="card-bottom"><div class="card-title">回音</div></div></div>
+  <div class="card fade-in" onclick="openWork(2)"><img class="card-img" src="/images/c07a69fe6v35a3f7118a810270beee63.png" loading="lazy"><div class="card-bottom"><div class="card-title">回音直播</div></div></div>
+  <div class="card fade-in" onclick="openWork(3)"><img class="card-img" src="/images/IMG_1189.jpeg" loading="lazy"><div class="card-bottom"><div class="card-title">回音</div></div></div>
   <div class="card fade-in" onclick="openWork(4)"><img class="card-img" src="https://picsum.photos/600/450?4"><div class="card-bottom"><div class="card-title">佛手</div></div></div>
   <div class="card fade-in" onclick="openWork(5)"><img class="card-img" src="https://picsum.photos/600/450?5"><div class="card-bottom"><div class="card-title">交易</div></div></div>
   <div class="card fade-in" onclick="openWork(6)"><img class="card-img" src="https://picsum.photos/600/450?6"><div class="card-bottom"><div class="card-title">有没有</div></div></div>
   <div class="card fade-in" onclick="openWork(7)"><img class="card-img" src="https://picsum.photos/600/450?7"><div class="card-bottom"><div class="card-title">人体写生</div></div></div>
   <div class="card fade-in" onclick="openWork(8)"><img class="card-img" src="https://picsum.photos/600/450?8"><div class="card-bottom"><div class="card-title">城市里的狗</div></div></div>
-  <div class="card fade-in" onclick="openWork(9)"><img class="card-img" src="/images/5f1d6a7f4nb796414227aa99df74e402.jpeg"><div class="card-bottom"><div class="card-title">好朋友</div></div></div>
-  <div class="card fade-in" onclick="openWork(10)"><img class="card-img" src="/images/a5d45a614s4f8009a54e6fcc58fd5335.jpeg"><div class="card-bottom"><div class="card-title">毕业之后在深圳上班</div></div></div>
+  <div class="card fade-in" onclick="openWork(9)"><img class="card-img" src="/images/5f1d6a7f4nb796414227aa99df74e402.jpeg" loading="lazy"><div class="card-bottom"><div class="card-title">好朋友</div></div></div>
+  <div class="card fade-in" onclick="openWork(10)"><img class="card-img" src="/images/a5d45a614s4f8009a54e6fcc58fd5335.jpeg" loading="lazy"><div class="card-bottom"><div class="card-title">毕业之后在深圳上班</div></div></div>
   <div class="card fade-in" onclick="openWork(11)"><img class="card-img" src="https://picsum.photos/600/450?11"><div class="card-bottom"><div class="card-title">你怎么了，给妈妈说说</div></div></div>
 </div>
 
 <div class="popup" id="work1"><div class="popup-head"><div class="title">写字在贴纸上</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work2"><div class="popup-head"><div class="title">回音直播</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1OnBUr5a5v2L66IYj_-UBmg?pwd=B5e6"></div></div>
-<div class="popup" id="work3"><div class="popup-head"><div class="title">回音</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<div class="popup" id="work2"><div class="popup-head"><div class="title">回音直播</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="/images/c07a69fe6v35a3f7118a810270beee63.png" loading="lazy"></div></div>
+<div class="popup" id="work3"><div class="popup-head"><div class="title">回音</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="/images/IMG_1189.jpeg" loading="lazy"></div></div>
 <div class="popup" id="work4"><div class="popup-head"><div class="title">佛手</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
 <div class="popup" id="work5"><div class="popup-head"><div class="title">交易</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
 <div class="popup" id="work6"><div class="popup-head"><div class="title">有没有</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
 <div class="popup" id="work7"><div class="popup-head"><div class="title">人体写生</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
 <div class="popup" id="work8"><div class="popup-head"><div class="title">城市里的狗</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><video class="fade-in" controls><source src="https://pan.baidu.com/s/1jjfW4UD2ShaSdPhsjCYt_Q?pwd=8zL9" type="video/mp4"></video></div></div>
-<div class="popup" id="work9"><div class="popup-head"><div class="title">好朋友</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1TweqSvr6E1yeI66DKdxQmg?pwd=16Ua"></div></div>
-<div class="popup" id="work10"><div class="popup-head"><div class="title">毕业之后在深圳上班</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1hWNqLfzK1UnRMoocTFBEwA?pwd=23ZB"></div></div>
+<div class="popup" id="work9"><div class="popup-head"><div class="title">好朋友</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="/images/5f1d6a7f4nb796414227aa99df74e402.jpeg" loading="lazy"></div></div>
+<div class="popup" id="work10"><div class="popup-head"><div class="title">毕业之后在深圳上班</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="/images/a5d45a614s4f8009a54e6fcc58fd5335.jpeg" loading="lazy"></div></div>
 <div class="popup" id="work11"><div class="popup-head"><div class="title">你怎么了，给妈妈说说</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"><img class="fade-in" src="https://pan.baidu.com/s/1aL1DuhMWX7X3pKghegLlpw?pwd=MoL8"></div></div>
 
 <script>

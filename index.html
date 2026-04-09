@@ -16,7 +16,7 @@ body {
   color: #111;
   padding-bottom: 60px;
 }
-/* 滚动渐入动画 */
+/* 滚动渐入 */
 .fade-in {
   opacity: 0;
   transform: translateY(10px);
@@ -26,15 +26,16 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
-/* 页面切换淡入过渡 */
+/* 页面切换淡入 */
 .page-wrap{display:none;opacity:0;transition:0.4s ease all;}
 .page-wrap.active{display:block;opacity:1;}
 
-/* 顶部标题 */
+/* 顶部名字可点击返回首页 */
 .top-name {
   padding: 28px 24px 12px;
   font-size: 24px;
   font-weight: 700;
+  cursor: pointer;
 }
 /* Tab导航 */
 .tab-bar {
@@ -65,23 +66,27 @@ body {
   height: 2px;
   background: #111;
 }
-/* Tab内容切换 */
 .tab-content{display:none;padding:28px 24px;}
 .tab-content.active{display:block;}
 
-/* 作品网格 桌面双列 */
+/* 作品网格 */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   padding: 28px 24px;
 }
-/* 卡片样式+hover动效 */
+
+/* ========== Behance风格卡片重构 ========== */
 .card {
   display: block;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  background:#fff;
+  border-radius:12px;
+  padding:12px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.05);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .card:hover {
@@ -92,19 +97,22 @@ body {
   width: 100%;
   aspect-ratio: 4/3;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: 8px;
   background: #f7f7f7;
 }
+/* 标题区加大留白，隔离图文，不拥挤 */
 .card-bottom {
-  padding-top: 10px;
+  padding-top: 14px;
+  padding-bottom:6px;
 }
 .card-title {
   font-size: 14px;
   font-weight: 600;
-  line-height: 1.3;
+  line-height: 1.4;
+  color:#222;
 }
 
-/* 作品详情页样式 */
+/* 详情页 */
 .work-detail{
   padding:40px 24px;
   max-width:900px;
@@ -117,17 +125,20 @@ body {
   color:#333;
 }
 
-/* 移动端自适应单列 */
+/* 移动端单列 */
 @media (max-width:768px){
   .grid{grid-template-columns:1fr;padding:20px 16px;gap:20px;}
   .top-name{padding:20px 16px 8px;font-size:20px;}
   .tab-bar{padding:0 16px 12px;gap:16px;}
+  .card{padding:10px;}
 }
 </style>
 </head>
 <body>
 
-<div class="top-name">陈红羽</div>
+<!-- 名字点击返回首页 -->
+<div class="top-name" onclick="backHome()">陈红羽</div>
+
 <div class="tab-bar">
   <span class="active" data-tab="work">作品2017-2026</span>
   <span data-tab="about">关于</span>
@@ -135,11 +146,12 @@ body {
   <span data-tab="contact">联系方式</span>
 </div>
 
-<!-- 作品主页 -->
 <div class="tab-content active" id="work-tab">
   <div class="grid">
     <div class="card fade-in" onclick="openWork(1)">
+      <!-- 第一张图如果打不开：把字贴改成字帖即可 -->
       <img class="card-img" src="images/字贴.jpeg">
+      <!-- <img class="card-img" src="images/字帖.jpeg"> -->
       <div class="card-bottom"><div class="card-title">写字在贴纸上</div></div>
     </div>
     <div class="card fade-in" onclick="openWork(2)">
@@ -177,31 +189,27 @@ body {
   </div>
 </div>
 
-<!-- 其他Tab页面 -->
+<!-- 内部全部删掉重复标题，页面干净无冗余 -->
 <div class="tab-content" id="about-tab">
-  <h2 style="margin:10px 0;">关于</h2>
-  <p>这里填写个人简介、创作理念。</p>
+  <p>这里填写个人简介、创作理念、经历。</p>
 </div>
 <div class="tab-content" id="exhibition-tab">
-  <h2 style="margin:10px 0;">展览</h2>
-  <p>这里填写参展履历。</p>
+  <p>这里填写参展、获奖、项目履历。</p>
 </div>
 <div class="tab-content" id="contact-tab">
-  <h2 style="margin:10px 0;">联系方式</h2>
-  <p>邮箱 / 社交账号放置处</p>
+  <p>邮箱 / 社交链接 / 联络方式</p>
 </div>
 
-<!-- 作品详情页面容器 -->
 <div id="work-detail" class="page-wrap">
   <div class="work-detail">
     <div class="back-btn" onclick="backHome()">← 返回作品列表</div>
-    <h2 id="detail-title"></h2>
+    <h2 id="detail-title" style="margin-bottom:20px;"></h2>
     <div id="detail-content"></div>
   </div>
 </div>
 
 <script>
-// Tab切换逻辑
+// Tab切换
 const tabs = document.querySelectorAll('.tab-bar span');
 tabs.forEach(item=>{
   item.onclick = function(){
@@ -213,7 +221,6 @@ tabs.forEach(item=>{
   }
 })
 
-// 作品标题映射（保持你原有标题不变）
 const workList = [
   {title:"写字在贴纸上"},
   {title:"回音直播"},
@@ -226,22 +233,20 @@ const workList = [
   {title:"毕业之后在深圳上班"}
 ];
 
-// 打开作品详情 贝汉斯淡入切换 无弹窗、不重复封面
 function openWork(num){
   let idx = num-1;
   document.getElementById('detail-title').innerText = workList[idx].title;
   document.getElementById('work-tab').classList.remove('active');
   document.getElementById('work-detail').classList.add('active');
-  document.body.style.overflow = 'auto';
 }
-
-// 返回主页
 function backHome(){
   document.getElementById('work-detail').classList.remove('active');
+  document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+  document.querySelector('[data-tab="work"]').classList.add('active');
   document.getElementById('work-tab').classList.add('active');
 }
 
-// 滚动渐入监听不变
+// 滚动渐入
 const els = document.querySelectorAll('.fade-in');
 const ob = new IntersectionObserver(es => {
   es.forEach(e => e.isIntersecting && e.target.classList.add('show'));

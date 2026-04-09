@@ -16,6 +16,7 @@ body {
   color: #111;
   padding-bottom: 60px;
 }
+/* 滚动渐入动画 */
 .fade-in {
   opacity: 0;
   transform: translateY(10px);
@@ -25,11 +26,17 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+/* 页面切换淡入过渡 */
+.page-wrap{display:none;opacity:0;transition:0.4s ease all;}
+.page-wrap.active{display:block;opacity:1;}
+
+/* 顶部标题 */
 .top-name {
   padding: 28px 24px 12px;
   font-size: 24px;
   font-weight: 700;
 }
+/* Tab导航 */
 .tab-bar {
   display: flex;
   gap: 26px;
@@ -58,17 +65,28 @@ body {
   height: 2px;
   background: #111;
 }
+/* Tab内容切换 */
+.tab-content{display:none;padding:28px 24px;}
+.tab-content.active{display:block;}
+
+/* 作品网格 桌面双列 */
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
   padding: 28px 24px;
 }
+/* 卡片样式+hover动效 */
 .card {
   display: block;
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
 }
 .card-img {
   width: 100%;
@@ -85,38 +103,25 @@ body {
   font-weight: 600;
   line-height: 1.3;
 }
-.popup {
-  position: fixed;
-  inset: 0;
-  background: #fff;
-  z-index: 999;
-  overflow-y: auto;
-  display: none;
+
+/* 作品详情页样式 */
+.work-detail{
+  padding:40px 24px;
+  max-width:900px;
+  margin:0 auto;
 }
-.popup.show {
-  display: block;
+.back-btn{
+  cursor:pointer;
+  margin-bottom:30px;
+  font-size:16px;
+  color:#333;
 }
-.popup-head {
-  position: sticky;
-  top: 0;
-  background: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 24px;
-  border-bottom: 1px solid #eee;
-}
-.popup-head .title {
-  font-size: 16px;
-  font-weight: 600;
-}
-.popup-close {
-  font-size: 22px;
-  cursor: pointer;
-}
-.popup-body img {
-  width: 100%;
-  display: block;
+
+/* 移动端自适应单列 */
+@media (max-width:768px){
+  .grid{grid-template-columns:1fr;padding:20px 16px;gap:20px;}
+  .top-name{padding:20px 16px 8px;font-size:20px;}
+  .tab-bar{padding:0 16px 12px;gap:16px;}
 }
 </style>
 </head>
@@ -124,79 +129,124 @@ body {
 
 <div class="top-name">陈红羽</div>
 <div class="tab-bar">
-  <span class="active">作品2017-2026</span>
-  <span>关于</span>
-  <span>展览</span>
-  <span>联系方式</span>
+  <span class="active" data-tab="work">作品2017-2026</span>
+  <span data-tab="about">关于</span>
+  <span data-tab="exhibition">展览</span>
+  <span data-tab="contact">联系方式</span>
 </div>
 
-<div class="grid">
-  <div class="card fade-in" onclick="openWork(1)">
-    <img class="card-img" src="字贴.jpg">
-    <div class="card-bottom"><div class="card-title">写字在贴纸上</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(2)">
-    <img class="card-img" src="回音直播.jpg">
-    <div class="card-bottom"><div class="card-title">回音直播</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(3)">
-    <img class="card-img" src="回音.jpg">
-    <div class="card-bottom"><div class="card-title">回音</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(4)">
-    <img class="card-img" src="佛手.jpg">
-    <div class="card-bottom"><div class="card-title">佛手</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(5)">
-    <img class="card-img" src="交易.jpg">
-    <div class="card-bottom"><div class="card-title">交易</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(6)">
-    <img class="card-img" src="你怎么了.jpg">
-    <div class="card-bottom"><div class="card-title">你怎么了，给妈妈说说</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(7)">
-    <img class="card-img" src="城市里的狗.jpg">
-    <div class="card-bottom"><div class="card-title">城市里的狗</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(8)">
-    <img class="card-img" src="好朋友.jpg">
-    <div class="card-bottom"><div class="card-title">好朋友</div></div>
-  </div>
-  <div class="card fade-in" onclick="openWork(9)">
-    <img class="card-img" src="深圳上班.jpg">
-    <div class="card-bottom"><div class="card-title">毕业之后在深圳上班</div></div>
+<!-- 作品主页 -->
+<div class="tab-content active" id="work-tab">
+  <div class="grid">
+    <div class="card fade-in" onclick="openWork(1)">
+      <img class="card-img" src="images/字贴.jpeg">
+      <div class="card-bottom"><div class="card-title">写字在贴纸上</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(2)">
+      <img class="card-img" src="images/回音直播.jpeg">
+      <div class="card-bottom"><div class="card-title">回音直播</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(3)">
+      <img class="card-img" src="images/回音.jpeg">
+      <div class="card-bottom"><div class="card-title">回音</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(4)">
+      <img class="card-img" src="images/佛手.jpg">
+      <div class="card-bottom"><div class="card-title">佛手</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(5)">
+      <img class="card-img" src="images/交易.jpeg">
+      <div class="card-bottom"><div class="card-title">交易</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(6)">
+      <img class="card-img" src="images/你怎么了.jpeg">
+      <div class="card-bottom"><div class="card-title">你怎么了，给妈妈说说</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(7)">
+      <img class="card-img" src="images/城市里的狗.jpeg">
+      <div class="card-bottom"><div class="card-title">城市里的狗</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(8)">
+      <img class="card-img" src="images/好朋友.jpeg">
+      <div class="card-bottom"><div class="card-title">好朋友</div></div>
+    </div>
+    <div class="card fade-in" onclick="openWork(9)">
+      <img class="card-img" src="images/深圳上班.jpeg">
+      <div class="card-bottom"><div class="card-title">毕业之后在深圳上班</div></div>
+    </div>
   </div>
 </div>
 
-<div class="popup" id="work1"><div class="popup-head"><div class="title">写字在贴纸上</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work2"><div class="popup-head"><div class="title">回音直播</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work3"><div class="popup-head"><div class="title">回音</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work4"><div class="popup-head"><div class="title">佛手</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work5"><div class="popup-head"><div class="title">交易</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work6"><div class="popup-head"><div class="title">你怎么了，给妈妈说说</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work7"><div class="popup-head"><div class="title">城市里的狗</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work8"><div class="popup-head"><div class="title">好朋友</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
-<div class="popup" id="work9"><div class="popup-head"><div class="title">毕业之后在深圳上班</div><div class="popup-close" onclick="closeWork()">×</div></div><div class="popup-body"></div></div>
+<!-- 其他Tab页面 -->
+<div class="tab-content" id="about-tab">
+  <h2 style="margin:10px 0;">关于</h2>
+  <p>这里填写个人简介、创作理念。</p>
+</div>
+<div class="tab-content" id="exhibition-tab">
+  <h2 style="margin:10px 0;">展览</h2>
+  <p>这里填写参展履历。</p>
+</div>
+<div class="tab-content" id="contact-tab">
+  <h2 style="margin:10px 0;">联系方式</h2>
+  <p>邮箱 / 社交账号放置处</p>
+</div>
+
+<!-- 作品详情页面容器 -->
+<div id="work-detail" class="page-wrap">
+  <div class="work-detail">
+    <div class="back-btn" onclick="backHome()">← 返回作品列表</div>
+    <h2 id="detail-title"></h2>
+    <div id="detail-content"></div>
+  </div>
+</div>
 
 <script>
-let current = null;
-function openWork(n) {
-  closeWork();
-  current = document.getElementById('work'+n);
-  current.classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-function closeWork() {
-  if (current) current.classList.remove('show');
-  current = null;
+// Tab切换逻辑
+const tabs = document.querySelectorAll('.tab-bar span');
+tabs.forEach(item=>{
+  item.onclick = function(){
+    tabs.forEach(i=>i.classList.remove('active'));
+    this.classList.add('active');
+    let id = this.getAttribute('data-tab');
+    document.querySelectorAll('.tab-content').forEach(el=>el.classList.remove('active'));
+    document.getElementById(id+'-tab').classList.add('active');
+  }
+})
+
+// 作品标题映射（保持你原有标题不变）
+const workList = [
+  {title:"写字在贴纸上"},
+  {title:"回音直播"},
+  {title:"回音"},
+  {title:"佛手"},
+  {title:"交易"},
+  {title:"你怎么了，给妈妈说说"},
+  {title:"城市里的狗"},
+  {title:"好朋友"},
+  {title:"毕业之后在深圳上班"}
+];
+
+// 打开作品详情 贝汉斯淡入切换 无弹窗、不重复封面
+function openWork(num){
+  let idx = num-1;
+  document.getElementById('detail-title').innerText = workList[idx].title;
+  document.getElementById('work-tab').classList.remove('active');
+  document.getElementById('work-detail').classList.add('active');
   document.body.style.overflow = 'auto';
 }
+
+// 返回主页
+function backHome(){
+  document.getElementById('work-detail').classList.remove('active');
+  document.getElementById('work-tab').classList.add('active');
+}
+
+// 滚动渐入监听不变
 const els = document.querySelectorAll('.fade-in');
 const ob = new IntersectionObserver(es => {
   es.forEach(e => e.isIntersecting && e.target.classList.add('show'));
-}, { threshold: 0.1 });
-els.forEach(el => ob.observe(el));
+},{ threshold: 0.1 });
+els.forEach(el=>ob.observe(el));
 </script>
 </body>
 </html>
